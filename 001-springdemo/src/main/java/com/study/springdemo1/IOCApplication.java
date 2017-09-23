@@ -14,12 +14,12 @@ public class IOCApplication {
 
     public static void main(String[] args) {
 
-        // 获取ioc容器，初始化bean 或者使用 ClassPathXmlApplicationContext
+        // 获取ioc容器，初始化bean 或者使用 ClassPathXmlApplicationContext,都是用classpath模式会方便点，否则打包会有问题
         FileSystemXmlApplicationContext ctx = new FileSystemXmlApplicationContext("classpath:spring-beans.xml");
 
         // 从容器中生成bean
         Organization org = ctx.getBean(Organization.class);
-        org.corporateSlogan();
+        org.corporateSlogan(IOCApplication.class.getName());
 
         // 关闭容器
         ctx.close();
