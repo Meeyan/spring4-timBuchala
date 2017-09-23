@@ -3,5 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean name="organization" class="com.study.springdemo1.beans.Organization"/>
+    <bean name="organization" class="com.study.springdemo1.beans.Organization"></bean>
+
+    <!-- bean with constructor method -->
+    <bean name="person" class="com.study.springdemo1.beans.Person">
+        <constructor-arg name="age" value="18"></constructor-arg>
+        <constructor-arg name="name" value="Lily"></constructor-arg>
+        <constructor-arg name="sex" value="female"></constructor-arg>
+    </bean>
 </beans>
