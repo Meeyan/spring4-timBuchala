@@ -16,11 +16,11 @@ import java.util.List;
 public class WelcomeController {
 
     @Autowired
-    private GenericWelcomeService genericWelcomeService;
+    private GenericWelcomeService welcomeService;
 
     @RequestMapping("/")
     public String doWelcome(Model model) {
-        List<String> welcomeMsg = genericWelcomeService.getWelcomeMsg("Zhang san");
+        List<String> welcomeMsg = welcomeService.getWelcomeMsg("Zhang san");
         model.addAttribute("welcomeMessages", welcomeMsg);
         return "welcome";
     }
