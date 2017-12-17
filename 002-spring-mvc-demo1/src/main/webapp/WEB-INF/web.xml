@@ -6,7 +6,6 @@
     <servlet>
         <servlet-name>defaultServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-
         <!-- 配置文件，如果不手动指定，spring默认会寻找defaultServlet-servlet.xml，也就是根据servlet-name的值寻找 -->
         <init-param>
             <param-name>contextConfigLocation</param-name>

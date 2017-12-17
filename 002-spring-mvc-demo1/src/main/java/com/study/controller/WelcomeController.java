@@ -13,6 +13,7 @@ import java.util.List;
  * @createTime 2017-10-19
  */
 @Controller
+@RequestMapping("/scoper")
 public class WelcomeController {
 
     @Autowired

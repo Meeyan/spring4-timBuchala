@@ -7,32 +7,61 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-init-method="initializeMethod"
+       default-destroy-method="destroyMethod">
 
     <!-- spring的扫描路径 -->
-    <context:component-scan base-package="com.study.*.*"/>
+    <context:component-scan base-package="com.study.*.**"/>
 
     <!-- 启用注解 -->
     <mvc:annotation-driven/>
+
+    <!--
+        如果配置文件中对于同一个bean的定义存在对个，程序中将不能使用class方式获取bean对象，否则IOC容器将无法判断返回那个一个bean定义。
+     -->
+
+    <!--
+        1. 声明一个bean，带有初始化方法和销毁方法
+        2. 指定工厂方法，工厂方法由本身提供
+    -->
+    <bean id="organization" class="com.study.bo.Organization" destroy-method="destroy" init-method="initialize" factory-method="getOrgInstanceStatic">
+        <constructor-arg name="companyName" value="Tencent"/>
+        <constructor-arg name="employeeCount" value="50000"/>
+        <constructor-arg name="postCode" value="200000"/>
+        <property name="genericWelcomeService" ref="welcomeService"/>
+    </bean>
+
+    <!--
+     指定工厂类+工厂方法获取对象
+     -->
+    <bean id="organization2" class="com.study.bo.Organization" factory-bean="organizationFactory" factory-method="getInstanceNoneStatic">
+        <constructor-arg name="companyName" value="ALiBaBa"/>
+        <constructor-arg name="employeeCount" value="50000"/>
+        <constructor-arg name="postCode" value="300000"/>
+    </bean>
+
+    <!-- 工厂类方法 -->
+    <bean id="organizationFactory" class="com.study.OrganizationFactory"/>
 
     <bean name="welcomeService" class="com.study.service.GenericWelcomeSVImpl"/>
 
     <!-- jsp视图解析器-内部自带 -->
     <bean name="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- jsp文件的位置 -->
-        <property name="prefix" value="/WEB-INFO/pages/"/>
-
+        <property name="prefix" value="/WEB-INF/pages/"/>
         <!-- jsp的后缀 -->
         <property name="suffix" value=".jsp"/>
     </bean>
 
     <!-- bean: 演示Request Scope  -->
-    <bean name="randomRequestSv" class="com.study.service.RandomRequestScopeService">
+    <bean name="randomRequestSv" class="com.study.service.RandomRequestScopeService" scope="request">
+        <!-- 为什么必须要加这个注解呢？ -->
         <aop:scoped-proxy/>
     </bean>
 
     <!-- bean: 演示Session Scope  -->
-    <bean name="randomSessionSv" class="com.study.service.RandomSessionScopeService">
+    <bean name="randomSessionSv" class="com.study.service.RandomSessionScopeService" scope="session">
         <aop:scoped-proxy/>
     </bean>
 
